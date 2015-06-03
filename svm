@@ -1,5 +1,0 @@
-#!/bin/bash
-
-SVM_BASE=$(dirname $0)
-
-tcc -run -g -I$SVM_BASE -L/usr/lib -lgc $SVM_BASE/svm.c $*
