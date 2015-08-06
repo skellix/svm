@@ -2,7 +2,7 @@
 #define ERROR_H
 
 #include <setjmp.h>
-#include "gc.h"
+//#include "gc.h"
 
 extern int error;
 extern char* errorMessage;

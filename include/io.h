@@ -5,7 +5,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <unistd.h>
-#include "gc.h"
+//#include "gc.h"
 //#include <sys/socket.h>
 //#include <netdb.h>
 //#include <arpa/inet.h>

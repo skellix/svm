@@ -5,7 +5,7 @@
 #include <setjmp.h>
 #include <stdarg.h>
 #include <string.h>
-#include "gc.h"
+//#include "gc.h"
 #include "bytecode.h"
 #include "stack.h"
 #include "error.h"

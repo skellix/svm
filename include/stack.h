@@ -6,7 +6,7 @@
 #include <string.h>
 #include <stdio.h>
 //#include <math.h>
-#include "gc.h"
+//#include "gc.h"
 #include "error.h"
 #include "bytecode.h"
 

@@ -1,7 +1,7 @@
 SHELL = /bin/sh
 .SUFFIXES: .c .o
 CC = gcc
-srcdir = bin
+srcdir = src
 includeDir = include
 debug = -g
 std = -std=c99

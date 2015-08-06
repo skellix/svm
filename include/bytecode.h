@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/time.h>
-#include "gc.h"
+//#include "gc.h"
 #include "error.h"
 #include "opcodes.h"
 

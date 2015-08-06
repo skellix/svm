@@ -4,7 +4,7 @@
 #include "bytecode.h"
 #include "stack.h"
 #include "debug.h"
-#include "gc.h"
+//#include "gc.h"
 #include "io.h"
 #include "error.h"
 

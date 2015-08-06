@@ -3,7 +3,7 @@
 #include <setjmp.h>
 #include <stdlib.h>
 #include <string.h>
-#include "gc.h"
+//#include "gc.h"
 
 int error = 0;
 char* errorMessage;

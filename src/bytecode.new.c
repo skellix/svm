@@ -4,7 +4,7 @@
 #include <stdlib.h>
 #include <dlfcn.h>
 #include <sys/time.h>
-#include "gc.h"
+//#include "gc.h"
 #include "error.h"
 #include "opcodes.h"
 #include "debug.h"
@@ -220,8 +220,12 @@ Bytecode* Bytecode_loadFromFile(char* fileName, int debug) {
 							offset ++;
 						while (fgetc(source) != '\n')
 							offset ++;
+						offset ++;
+					} else if (labelType[labelLen-1] == '"') {
+						out->data[i-offset] = ' ';
+					} else {
+						offset ++;
 					}
-					offset ++;
 				} else if (c == '!' && i == 1 && labelType[labelLen-1] == '#') {
 					label_remove();
 					offset -= 6;
