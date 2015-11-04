@@ -4,7 +4,7 @@ CC = gcc
 srcdir = src
 includeDir = include
 debug = -g
-std = -std=c99
+std = -std=gnu99
 
 
 svm: $(srcdir)/svm.c

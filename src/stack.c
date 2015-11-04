@@ -128,7 +128,8 @@ void Stack_dispose(Stack* stack) {
 		StackItem* item = Stack_pop(stack);
 		StackItem_dispose(item);
 	}
-	free(stack->data);
+	//StackItem_dispose(stack->data);
+	//free(stack->data);
 	free(stack);
 }
 

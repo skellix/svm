@@ -48,7 +48,7 @@ Bytecode* Bytecode_loadFromFile(char* fileName, int debug) {
 	int delimiter = 0;
 	int offset = 0;
 	int i = 0;
-	for (; i < length ; i ++) {
+	for (; i - offset < length ; i ++) {
 		if (feof(source)) {
 			length = i - 1;
 			break;
@@ -248,7 +248,7 @@ Bytecode* Bytecode_loadFromFile(char* fileName, int debug) {
 	out->data = realloc(out->data, length * sizeof(char));
 	if (debug > 1) {
 		printf("\naddress 0  1  2  3  4  5  6  7  8  9  A  B  C  D  E  F    0123456789ABCDEF\n");
-		for (int i = 0 ; i < out->length ; i += 16) {
+		for (unsigned long i = 0 ; i < out->length ; i += 16) {
             int len = 0;
             char hex[50];
             memset(hex, 0, 50);
@@ -333,7 +333,7 @@ void outputOps(Bytecode* main) {
 					length = _printOp(c, main, &i);
 				}
 			if (debug > 3) {
-				for (int j = i + 1 ; j <= i + length ; j ++) {
+				for (unsigned long j = i + 1 ; j <= i + length ; j ++) {
 					char c = main->data[j];
 					for (int j = 7 ; j >= 0 ; j --) {
 						printf("%c", (((c >> j) & 1) == 1) ? '1' : '0');

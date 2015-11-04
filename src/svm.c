@@ -94,13 +94,13 @@ int main(int argc, char** argv) {
 				}
 			}
 			fprintf(stderr, "Error: %s at line %d:\n", errorMessage, line);
-			fprintf(stderr, "index: %X\n", *mainThread->currentLocation);
+			fprintf(stderr, "index: %lX\n", *mainThread->currentLocation);
 			dumpLocals(mainThread->locals, mainThread->localFrame, stderr);
 			dumpStack(mainThread->stack, stderr);
 			return 1;
 		}
 		if ((exitStatus = runBytecode(mainThread)) != 0) {
-			fprintf(stderr, "Process returned a non zero exit value: %s\n", exitStatus);
+			fprintf(stderr, "Process returned a non zero exit value: %d\n", exitStatus);
 			dumpLocals(mainThread->locals, mainThread->localFrame, stderr);
 			dumpStack(mainThread->stack, stderr);
 			return 1;

@@ -59,10 +59,17 @@ static int cmpFuncs(const void* f1, const void* f2) {
 }
 
 void exec(Thread* thread) {
+	//int call = thread->main->data[*thread->currentLocation];
+	int opCall = thread->main->data[(*thread->currentLocation)];
+	//printf("op:[%d]\n",  opCall);
 	if (debug > 0) {
 		char c = thread->main->data[(*thread->currentLocation)];
 		printf("%6lX| ", *thread->currentLocation);
-		for (int i = frameDepth ; i > 0 ; i --) printf("  ");
+		if (opCall == '}') {
+			for (int i = frameDepth - 1 ; i > 0 ; i --) printf("  ");
+		} else {
+			for (int i = frameDepth ; i > 0 ; i --) printf("  ");
+		}
 		int (*_printOp)(short, Bytecode*, long*) = dlsym(debugLib, "printOp");
 		if (dlerror()) {
 			errorMessage = "unable to load libsvm.debug.so func printOp 1";
@@ -70,9 +77,6 @@ void exec(Thread* thread) {
 		}
 		_printOp((short)c, thread->main, thread->currentLocation);
 	}
-	//int call = thread->main->data[*thread->currentLocation];
-	int opCall = thread->main->data[(*thread->currentLocation)];
-	//printf("op:[%d]\n",  opCall);
 	switch (opCall) {
 		case FUNCTION: {
 // Execute Function
@@ -244,6 +248,7 @@ void exec(Thread* thread) {
 			frame->stackSize = thread->stack->length;
 			Stack_push(thread->localFrame, newStackItem(Type_LOCAL_FRAME, frame));
 			*thread->currentLocation += 4;
+			frameDepth ++;
 			return;}
 		default : {
 			switch (opCall) {
@@ -352,6 +357,7 @@ void exec(Thread* thread) {
 						StackItem_dispose(item);
 					}
 					StackItem_dispose(frameItem);
+					frameDepth --;
 					return;}
 				case '[': {
 					StackItem* arrayItem = Stack_pop(thread->stack);
@@ -414,11 +420,8 @@ void Bytecode_dispose(Bytecode* code) {
 
 int runBytecode(Thread* thread) {
 	*thread->running = 1;
-	if (debug > 0) {
-		printf("\n------.\n");
-	}
 	if (interactive) {
-		printf("Source Virtual Machine Debugger\n");
+		printf("\nSource Virtual Machine Debugger\n");
 		printf("\tVersion: 0.0.0\n");
 		printf("\tType '?' for help\n");
 		breaksLen = 0;
@@ -428,6 +431,9 @@ int runBytecode(Thread* thread) {
 		if (dlerror() != NULL) {
 			errorMessage = "unable to load libsvm.debug.so func debugCLI";
 			longjmp(errBuf, 1);
+		}
+		if (debug > 0) {
+			printf("------.\n");
 		}
 		while (*thread->running) {
 			while (_debugCLI(thread->main, thread->currentLocation, thread->stack, thread->locals, thread->localFrame));
@@ -443,6 +449,9 @@ int runBytecode(Thread* thread) {
 			}
 		}
 	} else {
+		if (debug > 0) {
+			printf("\n------.\n");
+		}
 		while (*thread->running) {
 			exec(thread);
 			(*thread->currentLocation) ++;

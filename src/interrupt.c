@@ -564,7 +564,7 @@ void int_call(Thread* thread, long label) {
 					while (*thread->currentLocation < end) {
 						(*thread->currentLocation) ++;
 						exec(thread);
-						}
+					}
 					while (thread->locals->length > 0) {
 						Stack_pop(thread->locals);
 					}
@@ -707,7 +707,7 @@ void int_function(Thread* thread, long label) {
 		Stack_push(thread->functions, newStackItem(Type_FUNCTION, funcDef));
 	} else {
 		errorMessage = calloc(1, sizeof(char));
-		sprintf(errorMessage, "no definition found for function '%s'", name->item);
+		sprintf(errorMessage, "no definition found for function '%s'", (char*) name->item);
 		longjmp(errBuf, 1);
 	}
 	StackItem_dispose(name);
@@ -793,7 +793,7 @@ void int_new(Thread* thread, long label) {
 			item = item->next;
 		}
 		errorMessage = realloc(errorMessage, sizeof(char));
-		sprintf(errorMessage, "class not found '%s'", name->item);
+		sprintf(errorMessage, "class not found '%s'", (char*) name->item);
 		longjmp(errBuf, 1);
 	} else {
 		errorMessage = "invalid arguments for function new";
@@ -855,7 +855,7 @@ void int_printf(Thread* thread, long label) {
 					}
 					StackItem_dispose(item);
 				} else {
-					printf(temp);
+					printf("%s", temp);
 					arg = 1;
 				}
 				free(temp);

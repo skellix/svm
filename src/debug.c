@@ -58,7 +58,7 @@ int printOp(short c, Bytecode* main, long* currentLocation) {
 			printf("Int(%d)\n", *(int*) &main->data[i+1] & 0xFFFF);
 			return 4;}
 		case FLOAT_CONST : {
-			printf("Float(%d)\n", *(float*) &main->data[i+1]);
+			printf("Float(%f)\n", *(float*) &main->data[i+1]);
 			return 4;}
 		case LIGHT_FRAME : {
 			printf("Paren(+%d)(\n", *(int*) &main->data[i+1] & 0xFFFF);
@@ -89,7 +89,7 @@ int opLength(short c, Bytecode* main, long* currentLocation) {
 int debugCLI(Bytecode* main, long* currentLocation, Stack* stack, Stack* locals, Stack* localFrame) {
 	if (breaksLen > 0 && breaks[breaksLen-1] <= *currentLocation) {
 		breaks = realloc(breaks, sizeof(long) * (-- breaksLen));
-		printf("%6X >", *currentLocation);
+		printf("%6lX >", *currentLocation);
 		char in[100];
 		scanf("%s", (char*) &in);
 		if (strcmp(in, "r") == 0) {
